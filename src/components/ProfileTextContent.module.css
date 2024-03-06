@@ -1,0 +1,18 @@
+.container {
+  margin-top: 2rem;
+}
+
+.container:nth-child(1) {
+  margin-top: 0;
+}
+
+.container > h2 {
+  margin-bottom: 1rem;
+  border-bottom: 0.5px solid var(--clr-border);
+  width: fit-content;
+}
+
+.container > p {
+  margin-top: 1rem;
+  color: var(--clr-fg-alt);
+}
