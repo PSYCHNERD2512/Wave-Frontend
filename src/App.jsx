@@ -5,9 +5,22 @@ import home from './assets/home.png'
 import profile from './assets/profile.png'
 import setting from './assets/setting.png'
 import avtar from './assets/Avatar.png'
+import search from './assets/Search.png'
+import DP from './assets/profile.jpeg'
+import waving_hand from './assets/Waving_hand.png'
+import srk from './assets/srk.jpg'
+import rashmika  from './assets/rashmika.jpg'
+import kartik from './assets/kartik.png'
+
 function Wave() {
-  
-  return(<>
+const list = [
+  {"name": "Gender","list":["Female","Male"]},
+  {"name": "Age","list":["17 & below","17-20","20-34","24-30","30 & above"]},
+  {"name":"Clubs","list":["Tech","Robotics","Culturals","Finance","Photography/Filmography"]},
+  {"name":"interests","list":["Music","Literature & Poetry","Sports","Cultural","Research/Acads","Entrepreneurship"]},
+  {"name":"Social Preferences","list":["Travel Enthusiasts","Wellness & Fitness","Study buddy","Tech Enthusiasts","Social Events","Music & Arts","Foodie"]} 
+]
+  return(<div id="WEBPAGE">
     <Header/>
     <div id="content">
       <div id="sideBar"> 
@@ -20,22 +33,98 @@ function Wave() {
         </div>
         <hr />
         <div className='connections'>
-          My Connections
-          <div id="myconnec">64</div>
+          My Connections 
+          <div id="myconnec">64</div><br />
         </div>
         <div id="sidelower">
-          <Avtars name="Tanishq" connectionsNum={69}/>
-          <Avtars name="Tanishq" connectionsNum={69}/>
-          <Avtars name="Tanishq" connectionsNum={69}/>
-          <Avtars name="Tanishq" connectionsNum={69}/>
-          <Avtars name="Tanishq" connectionsNum={69}/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
+        
         </div>
-        <div id="seeall">See All</div>
+        
       </div>
       <div id="right">
+        
+        <div id="FILTERDIV">
+          
+          <div id="filterupper">
+            <scope id="Filters">Filters</scope>
+            <div id="searchdiv">
+              <input type="text"  className="textinput" placeholder='search names,hobbies and more'/>
+              <div id="search">
+                <a href=""><img src={search} alt="" /></a>
+              </div>
+            </div>
+             <scope className='name'>Clear All</scope>
+          </div>
+          <div id="filterlower">
+           {list.map((head,index) => (
+           <div>
+            <div key={index} className='category'>{head.name}</div>
+            <ul className='subcategory'>
+              {head.list.map((option,index2) =>(<li key={index2} ><input type="checkbox" />{option}</li>))}
+            </ul>           
+           </div>))
+           }
+
+          </div>
+        </div>
+
+        <div id="main">
+          <FlashCard img={srk} name="srk" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
+          <FlashCard img={rashmika} name="Rashmika" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
+          <FlashCard img={kartik} name="Kartik" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
+          <FlashCard img={srk} name="srk" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
+          <FlashCard img={rashmika} name="Rashmika" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
+          <FlashCard img={kartik} name="Kartik" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
+          <FlashCard img={srk} name="srk" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
+          <FlashCard img={rashmika} name="Rashmika" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
+          <FlashCard img={kartik} name="Kartik" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
+        </div>  
+        <div id="sent">
+          <span className='span'>Waves sent</span>
+          <div className='peoples'>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
+          <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
+        </div>
+        </div>         
+        <div id="receive">
+          <span className='span'>Waves Received</span>
+          <div className='peoples'>
+            <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
+            <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
+            <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
+            <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
+            <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
+            <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
+            <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
+            <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
+            <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
+            <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
+          </div>
+        </div>
+
+
+
       </div>
     </div>
-    </>
+    </div>
     );
 }
 
@@ -54,22 +143,61 @@ function Header(){
 
 function Navigation_icons({logo,name}) {
   return(
-    <div className="nav">
-      <img src={logo} alt="" />{name}
+    <div className="nav" >
+      <img src={logo} alt="" /><div className='name'>{name}</div>
     </div>
   );
 }
-function Avtars({name,connectionsNum}){
+function Purposee({purpose}){
+    if(purpose==="just")return;
+    else if(purpose==="sent"){
+      return(<div className='pinkbutton'>sent</div>);
+    }
+    else{
+      return(<div className='pinkbutton'>Requested</div>);
+    }
+  }
+
+function Avtars({name,connectionsNum,purpose}){
   return(
     <div className='profile'>
       <img src={avtar} alt="" />
       <div id="details">
         <div className='name'>{name}</div>
-        <div >{connectionsNum}M connections</div>
+        <div id="connections" >{connectionsNum}M connections</div>
       </div>
+      <Purposee purpose={purpose}/>
     </div>
   );
 }
+
+function FlashCard({img,name,AboutMe,Interests}){
+  return(
+    
+    <div id="card">
+      <img src={img} alt="profile" id="profilephoto"/><br />
+      
+      <div id="info">
+        <div id="flashcardname"><strong>{name}</strong></div>
+        <strong>About Me</strong>
+       <div id="AboutMe">{AboutMe}</div> 
+       <br />
+       <strong>Interests </strong><br/>
+       {Interests.map((interest,index3) =>(<div id="interest" key={index3}>{interest}</div>))}
+        
+          <button id="sendwave">Send Wave</button>
+          <img id="wave" src={waving_hand} alt="" />
+        
+      </div>
+    </div>
+    
+  );
+
+}
+
+
+
+
 
 
 
