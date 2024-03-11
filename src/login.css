@@ -2,6 +2,7 @@
     display: flex;
     height: 100vh;
     position: relative;
+    font-family: "Comfortaa", sans-serif;
 }
 #beach{
     width: 45%;
@@ -32,7 +33,7 @@
 #div{
     height: auto;
 }
-input{
+.inputtext{
     border-radius: 10px;
     width: 404px;
     margin: 10px 0px 30px 0px;

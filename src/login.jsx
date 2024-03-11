@@ -16,10 +16,10 @@ function Login(){
                 <div id="Welcome_back">Welcome back !</div>
                 <form action="">
                     <label htmlFor="Username" className='Label'>Username</label><br />
-                    <input type="text" placeholder='Enter Username' id="Username"/>
+                    <input type="text" placeholder='Enter Username' id="Username" className='inputtext'/>
                     <br />
                     <label htmlFor="Password" className='Label'>Password</label><br />
-                    <input type="text" placeholder='Enter Your Password' /><br />
+                    <input type="text" placeholder='Enter Your Password' className='inputtext'/><br />
 
                     <button id="signUp">Signup</button>
                 </form>
