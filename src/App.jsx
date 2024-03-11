@@ -195,9 +195,4 @@ function FlashCard({img,name,AboutMe,Interests}){
 }
 
 
-
-
-
-
-
 export default Wave
