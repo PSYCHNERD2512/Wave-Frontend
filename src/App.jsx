@@ -104,7 +104,7 @@ const list = [
         <div id="main">
         {
           profiles.map((person,index3)=>(
-            <FlashCard key={index3} img={kartik} name={person.name} AboutMe="hii" Interests={person.interests.split(', ')} />
+            <FlashCard key={person.id} img={kartik} name={person.name} AboutMe="hii" Interests={person.interests.split(', ')} />
           ))
         } 
         </div>
