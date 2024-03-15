@@ -10,8 +10,30 @@ import waving_hand from './assets/Waving_hand.png'
 import srk from './assets/srk.jpg'
 import rashmika  from './assets/rashmika.jpg'
 import kartik from './assets/kartik.png'
+import axios from 'axios'
+import { useState } from 'react'
+import { useEffect } from 'react'
+
+
 
 function Wave() {
+
+  const [profiles,update]= useState([])
+  useEffect(()=>{
+    async function getaprofiles(){
+      try{
+        const profileslist=await axios.get('http://127.0.0.1:8000/profiles/')
+        console.log(profileslist.data.profiles)
+        update(profileslist.data.profiles)
+      }
+      catch(err){
+        console.log(err)
+      }
+    }
+    getaprofiles()
+  },[])
+
+
 const list = [
   {"name": "Gender","list":["Female","Male"]},
   {"name": "Age","list":["17 & below","17-20","20-34","24-30","30 & above"]},
@@ -55,19 +77,19 @@ const list = [
         <div id="FILTERDIV">
           
           <div id="filterupper">
-            <scope id="Filters">Filters</scope>
+            <span id="Filters">Filters</span>
             <div id="searchdiv">
               <input type="text"  className="textinput" placeholder='search names,hobbies and more'/>
               <div id="search">
                 <a href=""><img src={search} alt="" /></a>
               </div>
             </div>
-             <scope className='name'>Clear All</scope>
+             <span className='name'>Clear All</span>
           </div>
           <div id="filterlower">
            {list.map((head,index) => (
-           <div>
-            <div key={index} className='category'>{head.name}</div>
+           <div key={index}>
+            <div  className='category'>{head.name}</div>
             <ul className='subcategory'>
               {head.list.map((option,index2) =>(<li key={index2} ><input type="checkbox" />{option}</li>))}
             </ul>           
@@ -77,17 +99,18 @@ const list = [
           </div>
         </div>
 
+
+
         <div id="main">
-          <FlashCard img={srk} name="srk" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
-          <FlashCard img={rashmika} name="Rashmika" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
-          <FlashCard img={kartik} name="Kartik" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
-          <FlashCard img={srk} name="srk" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
-          <FlashCard img={rashmika} name="Rashmika" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
-          <FlashCard img={kartik} name="Kartik" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
-          <FlashCard img={srk} name="srk" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
-          <FlashCard img={rashmika} name="Rashmika" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
-          <FlashCard img={kartik} name="Kartik" AboutMe="I am a person with great sens of humor and easy to go out with." Interests={["Badminton","Watching movies","Cricket"]}/>
-        </div>  
+        {
+          profiles.map((person,index3)=>(
+            <FlashCard key={index3} img={kartik} name={person.name} AboutMe="hii" Interests={person.interests.split(', ')} />
+          ))
+        } 
+        </div>
+
+
+
         <div id="sent">
           <span className='span'>Waves sent</span>
           <div className='peoples'>
@@ -118,9 +141,6 @@ const list = [
             <Avtars name="Tanishq" connectionsNum={69} purpose="Received"/>
           </div>
         </div>
-
-
-
       </div>
     </div>
     </div>
