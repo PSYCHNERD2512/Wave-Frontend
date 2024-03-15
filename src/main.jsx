@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Wave from './App.jsx'
+import Wave from './Wave.jsx'
 import Login from './login.jsx'
+
+import App from './App.jsx'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -13,6 +15,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Wave/>,
   },
+  
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

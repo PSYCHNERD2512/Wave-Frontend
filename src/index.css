@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Comfortaa", "Times New Roman", Times, serif;
+  }
+  
+  :root {
+    --clr-primary: rgb(255, 93, 132);
+    --clr-bg: rgb(255, 255, 255);
+    --clr-bg-alt: rgb(240, 240, 240);
+    --clr-border: rgba(0, 0, 0, 0.4);
+    --clr-border-alt: rgba(3, 2, 41, 0.2);
+    --clr-accent: rgb(73, 0, 87);
+    --clr-fg: rgb(0, 0, 0);
+    --clr-fg-alt: rgba(45, 27, 49, 0.77);
+  }

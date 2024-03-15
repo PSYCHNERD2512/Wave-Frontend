@@ -1,0 +1,61 @@
+.banner > img {
+  max-height: 30vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.bannerInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 4rem;
+  padding-right: 2rem;
+}
+
+.bannerInfo > div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bannerInfo > div > span {
+  font-size: 2rem;
+}
+
+.bannerInfo > button {
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  border: 1px solid var(--clr-border);
+  background: white;
+  font-weight: 600;
+}
+
+.profilePicture {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 100%;
+  margin-top: -5rem;
+  object-fit: cover;
+}
+
+.content {
+  margin-top: 2rem;
+  background: var(--clr-bg-alt);
+  padding: 1rem;
+}
+.content > div {
+  background: var(--clr-bg);
+  border-radius: 1rem;
+  padding: 2rem;
+
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 4rem;
+}
+
+.profileInfo {
+  color: var(--clr-accent);
+}
+.profileInfo > span {
+  font-size: 1.15rem;
+}
