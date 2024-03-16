@@ -15,6 +15,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <Wave/>,
   },
+  {
+    path:"profile/:id",
+    element:<App />
+
+  }
   
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(

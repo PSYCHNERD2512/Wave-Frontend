@@ -13,7 +13,7 @@ import kartik from './assets/kartik.png'
 import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
-
+import { Outlet, Link } from "react-router-dom";
 
 
 function Wave() {
@@ -104,7 +104,7 @@ const list = [
         <div id="main">
         {
           profiles.map((person,index3)=>(
-            <FlashCard key={person.id} img={kartik} name={person.name} AboutMe="hii" Interests={person.interests.split(', ')} />
+            <FlashCard key={person.id} img={kartik} name={person.name} AboutMe="hii" Interests={person.interests.split(', ')} id={person.id} />
           ))
         } 
         </div>
@@ -190,10 +190,11 @@ function Avtars({name,connectionsNum,purpose}){
   );
 }
 
-function FlashCard({img,name,AboutMe,Interests}){
+function FlashCard({img,name,AboutMe,Interests,id}){
+  
   return(
-    
-    <div id="card">
+     <Link to={`profile/${id}`}>
+    <div id="card" >
       <img src={img} alt="profile" id="profilephoto"/><br />
       
       <div id="info">
@@ -204,15 +205,15 @@ function FlashCard({img,name,AboutMe,Interests}){
        <strong>Interests </strong><br/>
        {Interests.map((interest,index3) =>(<div id="interest" key={index3}>{interest}</div>))}
         
-          <button id="sendwave">Send Wave</button>
+          <button id="sendwave" onClick={()=>alert("done")}>Send Wave</button>
           <img id="wave" src={waving_hand} alt="" />
         
       </div>
     </div>
-    
+     </Link> 
   );
 
 }
 
 
-export default Wave
+export default Wave 
