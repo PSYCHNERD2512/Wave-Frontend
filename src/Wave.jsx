@@ -104,8 +104,10 @@ const list = [
         <div id="main">
         {
           profiles.map((person,index3)=>(
-            <FlashCard key={person.id} img={kartik} name={person.name} AboutMe="hii" Interests={person.interests.split(', ')} id={person.id} />
-          ))
+             
+            <FlashCard  key={person.id} img={kartik} data={person} name={person.name} AboutMe="hii" Interests={person.interests.split(', ')} id={person.id} />
+          
+            ))
         } 
         </div>
 
@@ -190,11 +192,12 @@ function Avtars({name,connectionsNum,purpose}){
   );
 }
 
-function FlashCard({img,name,AboutMe,Interests,id}){
+function FlashCard({img,name,AboutMe,Interests,id,data}){
   
   return(
-     <Link to={`profile/${id}`}>
-    <div id="card" >
+    
+    <div id="card" ><Link id="link" to={{pathname:`profile/${id}`,
+    state:{data}}}>
       <img src={img} alt="profile" id="profilephoto"/><br />
       
       <div id="info">
@@ -205,12 +208,16 @@ function FlashCard({img,name,AboutMe,Interests,id}){
        <strong>Interests </strong><br/>
        {Interests.map((interest,index3) =>(<div id="interest" key={index3}>{interest}</div>))}
         
-          <button id="sendwave" onClick={()=>alert("done")}>Send Wave</button>
+          <button id="sendwave" onClick={(e)=>{
+            e.preventDefault();
+            // e.stopPropagation();
+            alert("done")
+          }}>Send Wave</button>
           <img id="wave" src={waving_hand} alt="" />
         
-      </div>
+      </div></Link>
     </div>
-     </Link> 
+     
   );
 
 }

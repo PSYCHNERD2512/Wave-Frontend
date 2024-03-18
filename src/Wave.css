@@ -324,3 +324,7 @@ strong{
   height: 30px;
   margin: 2%;
 }
+#link{
+  text-decoration: none;
+  color: black;
+}

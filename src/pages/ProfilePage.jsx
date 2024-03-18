@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import { ProfileInfo, ProfileTextContent } from "../components";
 import {
   CakeIcon,
@@ -6,8 +7,26 @@ import {
   UserIcon,
 } from "../components/icons";
 import styles from "./ProfilePage.module.css";
+import { useState,useEffect } from "react";
+import axios from 'axios'
 
 export const ProfilePage = () => {
+  let {id}=useParams()
+  const [detail,upd]= useState({})
+  useEffect(()=>{
+    async function getdata(){
+      try{
+        const data=await axios.get(`http://127.0.0.1:8000/profiles/${id}`)
+        console.log(data.data)
+        upd(data.data)
+      }
+      catch(err){
+        console.log(err)
+      }
+    }
+    getdata()
+  },[])
+
   return (
     <div className={styles.container}>
       <div className={styles.banner}>
@@ -18,11 +37,11 @@ export const ProfilePage = () => {
         <div className={styles.bannerInfo}>
           <div>
             <img
-              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src={detail.picture}
               alt="profile picture"
               className={styles.profilePicture}
             />
-            <span>Geet Sethi</span>
+            <span>{detail.name}</span>
           </div>
 
           <button>Edit Profile</button>
@@ -33,21 +52,21 @@ export const ProfilePage = () => {
         <div>
           <aside className={styles.profileInfo}>
             <span>BTech in Mechanical Engg. at IIT Bombay</span>
-            <ProfileInfo icon={<UserIcon />} text="Male" />
+            <ProfileInfo icon={<UserIcon />} text={detail.gender} />
             <ProfileInfo icon={<CakeIcon />} text="June 26, 1980" />
-            <ProfileInfo icon={<EmailIcon />} text="Abhi1234@gmail.com" />
-            <ProfileInfo icon={<LocationIcon />} text="Bandra (W), Mumbai" />
+            <ProfileInfo icon={<EmailIcon />} text={detail.email} />
+            <ProfileInfo icon={<LocationIcon />} text={detail.residence} />
           </aside>
 
           <div>
             <ProfileTextContent
               heading="About Me"
-              content="Hey there! I'm Abhishek, a BTech student studying at IITB. Passionate about Football and movies, I'm always on the lookout for new adventures and meaningful connections with fellow students. Whether it's diving into coding projects, exploring the latest tech trends, or unwinding with a good book, I'm eager to share experiences!!"
+              content={detail.about} 
             />
             <ProfileTextContent
               heading="I'm lookin for..."
-              content="expanding my social circle and meet new friends with whom I can hang out, attend campus events, or explore the local area."
-            />
+              content=""
+              />
           </div>
         </div>
       </main>

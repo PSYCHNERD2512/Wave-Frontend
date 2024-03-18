@@ -29,7 +29,7 @@ function Login(){
                     or
                     <div className="line"></div>
                 </div>
-                <div id="signin">Have an account? <a href=""> Sign in</a></div>
+                <div id="signin">Have an account? <a id="s" href=""> Sign in</a></div>
                 
               </div>
             </div>
