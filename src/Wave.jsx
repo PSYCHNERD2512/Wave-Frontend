@@ -10,13 +10,30 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Container from "./components/Container";
 
+async function sendWave(send,receiver_id){
+  const sendresponse = await axios.post(`http://127.0.0.1:8000/waving/send_wave/${send}/${receiver_id}/`);
+  console.log(sendresponse.status);
+
+}
+function finduser(ids, allProfiles) {
+  return allProfiles.filter(profile => ids.includes(profile.id));
+}
+
+
+
+
 function Wave() {
+
+
+
+  ///////////////////////////////////////////////////////
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [allProfiles, setAllProfiles] = useState([]);
-
-  let { username } = useParams();
   const [datauser, upddata] = useState({});
+  let { username } = useParams();
+  const [sentlist,usentlist]=useState([])
+  const [receivelist,ureceivelist]=useState([])
   useEffect(() => {
     async function getdata() {
       try {
@@ -26,12 +43,21 @@ function Wave() {
         const all_data = await axios.get(`http://127.0.0.1:8000/profiles/`);
         setAllProfiles(all_data.data.profiles);
         upddata(data.data);
+        console.log(datauser);
+        console.log(datauser.connections)
+        const sendwaveprofiles=finduser(datauser.sent_requests,allProfiles);
+        const receiveprofiles=finduser(datauser.received_requests,allProfiles);
+        console.log(sendwaveprofiles);
+        usentlist(sendwaveprofiles);
+        console.log(sentlist);
+        ureceivelist(receiveprofiles);
+      
       } catch (err) {
         console.log(err);
       }
     }
     getdata();
-  }, []);
+  }, [datauser]);
 
   /////////////////////////////////////////////////
 
@@ -134,15 +160,19 @@ function Wave() {
           allProfiles.map((person) => (
             <FlashCard
               key={person.id}
-              img={kartik}
+              img={person.picture}
               data={person}
               name={person.name}
               AboutMe="hii"
               Interests={person.interests.split(", ")}
               id={person.id}
+              baapuser={datauser}
             />
           ))}
         {searchResults.map((person) => (
+          
+
+
           <FlashCard
             key={person.id}
             img={kartik}
@@ -151,6 +181,8 @@ function Wave() {
             AboutMe="hii"
             Interests={person.interests.split(", ")}
             id={person.id}
+            baapuser={datauser}
+            
           />
         ))}
       </div>
@@ -158,31 +190,29 @@ function Wave() {
       <div id="sent">
         <span className="span">Waves sent</span>
         <div className="peoples">
-          <Avtars name="Tanishq" connectionsNum={69} purpose="sent" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="sent" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="sent" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="sent" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="sent" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="sent" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="sent" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="sent" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="sent" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="sent" />
+        {sentlist.length > 0 &&
+            sentlist.map((person, index) => (
+              <Avtars
+                key={index}
+                name={person.name}
+                connectionsNum={person.connections.length}
+                purpose="sent"
+              />
+            ))}
         </div>
       </div>
       <div id="receive">
         <span className="span">Waves Received</span>
         <div className="peoples">
-          <Avtars name="Tanishq" connectionsNum={69} purpose="Received" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="Received" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="Received" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="Received" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="Received" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="Received" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="Received" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="Received" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="Received" />
-          <Avtars name="Tanishq" connectionsNum={69} purpose="Received" />
+        {receivelist.length > 0 &&
+            receivelist.map((person, index) => (
+              <Avtars
+                key={index}
+                name={person.name}
+                connectionsNum={person.connections.length}
+                purpose="Requested"
+              />
+            ))}
         </div>
       </div>
     </Container>
@@ -211,13 +241,26 @@ function Avtars({ name, connectionsNum, purpose }) {
   );
 }
 
-function FlashCard({ img, name, AboutMe, Interests, id, data }) {
+function FlashCard({ img, name, AboutMe, Interests, id, data,baapuser }) {
+
+  const [imageSrc, setImageSrc] = useState(""); // State to store decrypted image URL
+
+  useEffect(() => {
+    // Decrypt and set image source when the component mounts
+    if (data.image) {
+      const blob = base64toBlob(data.image, "image/png"); // Assuming the image is PNG
+      const imageUrl = URL.createObjectURL(blob);
+      setImageSrc(imageUrl);
+    }
+  }, [data.image]);
+
+
   return (
     <div id="card">
       <Link
         id="link"
         to={{
-          pathname: `profile/${id}`,
+          pathname: `/profiles/${data.username}`,
           state: { data },
         }}
       >
@@ -242,9 +285,8 @@ function FlashCard({ img, name, AboutMe, Interests, id, data }) {
           <button
             id="sendwave"
             onClick={(e) => {
-              e.preventDefault();
-              // e.stopPropagation();
-              alert("done");
+              e.preventDefault();             
+              sendWave(baapuser.id,id);
             }}
           >
             Send Wave
@@ -255,5 +297,27 @@ function FlashCard({ img, name, AboutMe, Interests, id, data }) {
     </div>
   );
 }
+
+
+function base64toBlob(base64Data, contentType = "") {
+  const sliceSize = 512;
+  const byteCharacters = atob(base64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  return new Blob(byteArrays, { type: contentType });
+}
+
 
 export default Wave;

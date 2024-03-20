@@ -19,14 +19,13 @@ const Routes= () =>{
             {
               path: "/Home/:username",
               element: <Wave/>,
-            },
-            {
+            }, 
+          ],
+        },
+        {
               path:"/profiles/:username",
               element : <App/>
             },
-            
-          ],
-        },
       ];
 
       const routesForNotAuthenticatedOnly = [
