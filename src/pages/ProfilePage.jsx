@@ -11,12 +11,12 @@ import { useState,useEffect } from "react";
 import axios from 'axios'
 
 export const ProfilePage = () => {
-  let {id}=useParams()
+  let {username}=useParams()
   const [detail,upd]= useState({})
   useEffect(()=>{
     async function getdata(){
       try{
-        const data=await axios.get(`http://127.0.0.1:8000/profiles/${id}`)
+        const data=await axios.get(`http://127.0.0.1:8000/profiles/${username}`)
         console.log(data.data)
         upd(data.data)
       }

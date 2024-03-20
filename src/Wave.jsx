@@ -7,32 +7,38 @@ import avtar from './assets/Avatar.png'
 import search from './assets/Search.png'
 import DP from './assets/profile.jpeg'
 import waving_hand from './assets/Waving_hand.png'
-import srk from './assets/srk.jpg'
-import rashmika  from './assets/rashmika.jpg'
 import kartik from './assets/kartik.png'
 import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { Outlet, Link } from "react-router-dom";
+import { useParams } from 'react-router-dom'
+
+//todo:data.connections,length
+
+
 
 
 function Wave() {
-
-  const [profiles,update]= useState([])
-  useEffect(()=>{
-    async function getaprofiles(){
-      try{
-        const profileslist=await axios.get('http://127.0.0.1:8000/profiles/')
-        console.log(profileslist.data.profiles)
-        update(profileslist.data.profiles)
+ 
+  ///////////////////////to get data of username
+    let {username}=useParams()
+    const [datauser,upddata]= useState({})
+    useEffect(()=>{
+      async function getdata(){
+        try{
+          const data=await axios.get(`http://127.0.0.1:8000/profiles/${username}`)
+          console.log(data)
+          upddata(data.data)
+        }
+        catch(err){
+          console.log(err)
+        }
       }
-      catch(err){
-        console.log(err)
-      }
-    }
-    getaprofiles()
-  },[])
+      getdata()
+    },[])
 
+/////////////////////////////////////////////////
 
 const list = [
   {"name": "Gender","list":["Female","Male"]},
@@ -49,26 +55,18 @@ const list = [
           <div id="home">        
             <Navigation_icons logo={home} name="  Home"/>
           </div>
-            <Navigation_icons logo={profile} name="  Profile"/>
+            <Link id="link" to={{pathname:`/profiles/${datauser.username}`}}>
+              <Navigation_icons logo={profile} name="  Profile"/>
+            </Link>
             <Navigation_icons logo={setting} name="  Settings"/>          
         </div>
         <hr />
         <div className='connections'>
           My Connections 
-          <div id="myconnec">64</div><br />
+        <div id="myconnec">{datauser["connections"]}</div><br />
         </div>
         <div id="sidelower">
-          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
-          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
-          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
-          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
-          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
-          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
-          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
-          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
-          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
-          <Avtars name="Tanishq" connectionsNum={69} purpose="just"/>
-        
+          ////////map function remaining to implement
         </div>
         
       </div>
@@ -79,8 +77,12 @@ const list = [
           <div id="filterupper">
             <span id="Filters">Filters</span>
             <div id="searchdiv">
-              <input type="text"  className="textinput" placeholder='search names,hobbies and more'/>
-              <div id="search">
+              <input 
+              type="text"  
+              className="textinput" 
+              placeholder='search names,hobbies and more'
+              />
+              <div id="search" >
                 <a href=""><img src={search} alt="" /></a>
               </div>
             </div>
@@ -102,13 +104,13 @@ const list = [
 
 
         <div id="main">
-        {
+        {/* {
           profiles.map((person,index3)=>(
              
             <FlashCard  key={person.id} img={kartik} data={person} name={person.name} AboutMe="hii" Interests={person.interests.split(', ')} id={person.id} />
           
             ))
-        } 
+        }  */}
         </div>
 
 
@@ -116,6 +118,7 @@ const list = [
         <div id="sent">
           <span className='span'>Waves sent</span>
           <div className='peoples'>
+
           <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
           <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>
           <Avtars name="Tanishq" connectionsNum={69} purpose="sent"/>

@@ -1,40 +1,45 @@
-import './login.css'
-import beach from './assets/beach.png'
-import logos from './assets/logo_wave.png'
+import { useAuth } from './provider/authProvider';
+import { useNavigate,Link } from 'react-router-dom';
+import { Login_page } from './pages/Login_page';
 
-function Login(){
 
-    return(
-        <div id="whole">
-            <div id="symbol">
-                <img id="logo" src={logos}/>
-                <div id="WAVE">Wave</div>
-            </div>
-            <div id="beach"><img src={beach} alt="" /></div>
-            <div id="login">
-              <div id="div">
-                <div id="Welcome_back">Welcome back !</div>
-                <form action="">
-                    <label htmlFor="Username" className='Label'>Username</label><br />
-                    <input type="text" placeholder='Enter Username' id="Username" className='inputtext'/>
-                    <br />
-                    <label htmlFor="Password" className='Label'>Password</label><br />
-                    <input type="text" placeholder='Enter Your Password' className='inputtext'/><br />
 
-                    <button id="signUp">Signup</button>
-                </form>
+const Login = () => {
+    const { setToken } = useAuth();
+    const navigate = useNavigate();
+  
+    const handleLogin = async(username,password) => {
+    try{  
+        const response = await fetch('http://127.0.0.1:8000/accounts/login/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        });
+          
+        if (!response.ok) {
+            throw new Error('Login failed. Please check your credentials.');
+        }
+        const data=await response.json();
+        const token=data.refresh;
+       
+        // console.log(token)
+        setToken(token)
+        
 
-                <div class="text-between-lines">
-                    <div className="line"></div>
-                    or
-                    <div className="line"></div>
-                </div>
-                <div id="signin">Have an account? <a id="s" href=""> Sign in</a></div>
-                
-              </div>
-            </div>
 
-        </div>
-    );
-}
+        navigate(`/Home/${username}`, { replace: true });
+    
+    }catch(err){
+        alert(err)
+    }
+    };
+
+    // setTimeout(() => {
+    //   handleLogin();
+    // }, 30 * 1000);
+  
+    return <Login_page onLogin={handleLogin} />;
+  };
 export default Login
