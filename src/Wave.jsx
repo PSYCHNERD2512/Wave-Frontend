@@ -47,6 +47,9 @@ const list = [
   {"name":"interests","list":["Music","Literature & Poetry","Sports","Cultural","Research/Acads","Entrepreneurship"]},
   {"name":"Social Preferences","list":["Travel Enthusiasts","Wellness & Fitness","Study buddy","Tech Enthusiasts","Social Events","Music & Arts","Foodie"]} 
 ]
+if (!datauser) {
+  return <div>Loading...</div>
+}
   return(<div id="WEBPAGE">
     <Header/>
     <div id="content">
@@ -63,10 +66,10 @@ const list = [
         <hr />
         <div className='connections'>
           My Connections 
-        <div id="myconnec">{datauser["connections"]}</div><br />
+        <div id="myconnec">{datauser.connections && datauser.connections.length}</div><br />
         </div>
         <div id="sidelower">
-          ////////map function remaining to implement
+          {datauser.connections && datauser.connections.length === 0 ? "No connections" : "TODO :)"}
         </div>
         
       </div>

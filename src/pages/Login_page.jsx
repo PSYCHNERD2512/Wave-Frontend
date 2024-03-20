@@ -39,7 +39,7 @@ export const Login_page=({onLogin})=>{
                     <button type="submit" id="signUp">Signup</button>
                 </form>
 
-                <div class="text-between-lines">
+                <div className="text-between-lines">
                     <div className="line"></div>
                     or
                     <div className="line"></div>

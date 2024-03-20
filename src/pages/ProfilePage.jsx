@@ -27,6 +27,10 @@ export const ProfilePage = () => {
     getdata()
   },[])
 
+  if (!detail) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.banner}>

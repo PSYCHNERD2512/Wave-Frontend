@@ -27,8 +27,6 @@ const Login = () => {
         // console.log(token)
         setToken(token)
         
-
-
         navigate(`/Home/${username}`, { replace: true });
     
     }catch(err){
