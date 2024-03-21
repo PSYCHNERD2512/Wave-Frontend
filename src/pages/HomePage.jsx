@@ -139,18 +139,20 @@ export default function HomePage() {
         <div id="main">
           <div>
             {searchResults.length === 0 &&
-              allProfiles.map((person) => (
-                <FlashCard
-                  key={person.id}
-                  img={person.picture}
-                  data={person}
-                  name={person.name}
-                  AboutMe="hii"
-                  Interests={person.interests.split(", ")}
-                  id={person.id}
-                  baapuser={datauser}
-                />
-              ))}
+              allProfiles
+                .filter((person) => person.id !== datauser.id)
+                .map((person) => (
+                  <FlashCard
+                    key={person.id}
+                    img={person.picture}
+                    data={person}
+                    name={person.name}
+                    AboutMe="hii"
+                    Interests={person.interests.split(", ")}
+                    id={person.id}
+                    baapuser={datauser}
+                  />
+                ))}
             {searchResults.map((person) => (
               <FlashCard
                 key={person.id}
