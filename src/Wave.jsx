@@ -4,36 +4,41 @@ import kartik from "./assets/kartik.png";
 import search from "./assets/Search.png";
 import waving_hand from "./assets/Waving_hand.png";
 import axios from "axios";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Container from "./components/Container";
 
-async function sendWave(send,receiver_id){
-  const sendresponse = await axios.post(`http://127.0.0.1:8000/waving/send_wave/${send}/${receiver_id}/`);
+async function sendWave(send, receiver_id) {
+  const sendresponse = await axios.post(
+    `http://127.0.0.1:8000/waving/send_wave/${send}/${receiver_id}/`,
+  );
   console.log(sendresponse.status);
-
 }
 function finduser(ids, allProfiles) {
-  return allProfiles.filter(profile => ids.includes(profile.id));
+  return;
 }
 
-
-
-
 function Wave() {
-
-
-
-  ///////////////////////////////////////////////////////
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [allProfiles, setAllProfiles] = useState([]);
   const [datauser, upddata] = useState({});
+  const sentRequests = useMemo(() => {
+    if (!datauser || !datauser.sent_requests) return [];
+    return allProfiles.filter((profile) =>
+      datauser.sent_requests.includes(profile.id),
+    );
+  }, [datauser, allProfiles]);
+  const receivedRequests = useMemo(() => {
+    if (!datauser || !datauser.received_requests) return [];
+    return allProfiles.filter((profile) =>
+      datauser.received_requests.includes(profile.id),
+    );
+  }, [datauser, allProfiles]);
   let { username } = useParams();
-  const [sentlist,usentlist]=useState([])
-  const [receivelist,ureceivelist]=useState([])
+
   useEffect(() => {
     async function getdata() {
       try {
@@ -43,23 +48,13 @@ function Wave() {
         const all_data = await axios.get(`http://127.0.0.1:8000/profiles/`);
         setAllProfiles(all_data.data.profiles);
         upddata(data.data);
-        console.log(datauser);
-        console.log(datauser.connections)
-        const sendwaveprofiles=finduser(datauser.sent_requests,allProfiles);
-        const receiveprofiles=finduser(datauser.received_requests,allProfiles);
-        console.log(sendwaveprofiles);
-        usentlist(sendwaveprofiles);
-        console.log(sentlist);
-        ureceivelist(receiveprofiles);
-      
       } catch (err) {
         console.log(err);
       }
     }
-    getdata();
-  }, [datauser]);
 
-  /////////////////////////////////////////////////
+    getdata();
+  }, []);
 
   const list = [
     { name: "Gender", list: ["Female", "Male"] },
@@ -111,6 +106,7 @@ function Wave() {
           <span id="Filters">Filters</span>
           <form
             onSubmit={(e) => {
+              console.log("resubmitting");
               e.preventDefault();
 
               axios
@@ -170,9 +166,6 @@ function Wave() {
             />
           ))}
         {searchResults.map((person) => (
-          
-
-
           <FlashCard
             key={person.id}
             img={kartik}
@@ -182,7 +175,6 @@ function Wave() {
             Interests={person.interests.split(", ")}
             id={person.id}
             baapuser={datauser}
-            
           />
         ))}
       </div>
@@ -190,29 +182,29 @@ function Wave() {
       <div id="sent">
         <span className="span">Waves sent</span>
         <div className="peoples">
-        {sentlist.length > 0 &&
-            sentlist.map((person, index) => (
-              <Avtars
-                key={index}
-                name={person.name}
-                connectionsNum={person.connections.length}
-                purpose="sent"
-              />
-            ))}
+          {sentRequests.length === 0 && "No waves sent yet!"}
+          {sentRequests.map((person, index) => (
+            <Avtars
+              key={index}
+              name={person.name}
+              connectionsNum={person.connections.length}
+              purpose="sent"
+            />
+          ))}
         </div>
       </div>
       <div id="receive">
         <span className="span">Waves Received</span>
         <div className="peoples">
-        {receivelist.length > 0 &&
-            receivelist.map((person, index) => (
-              <Avtars
-                key={index}
-                name={person.name}
-                connectionsNum={person.connections.length}
-                purpose="Requested"
-              />
-            ))}
+          {receivedRequests.length === 0 && "No waves received yet!"}
+          {receivedRequests.map((person, index) => (
+            <Avtars
+              key={index}
+              name={person.name}
+              connectionsNum={person.connections.length}
+              purpose="Requested"
+            />
+          ))}
         </div>
       </div>
     </Container>
@@ -241,8 +233,7 @@ function Avtars({ name, connectionsNum, purpose }) {
   );
 }
 
-function FlashCard({ img, name, AboutMe, Interests, id, data,baapuser }) {
-
+function FlashCard({ img, name, AboutMe, Interests, id, data, baapuser }) {
   const [imageSrc, setImageSrc] = useState(""); // State to store decrypted image URL
 
   useEffect(() => {
@@ -253,7 +244,6 @@ function FlashCard({ img, name, AboutMe, Interests, id, data,baapuser }) {
       setImageSrc(imageUrl);
     }
   }, [data.image]);
-
 
   return (
     <div id="card">
@@ -285,8 +275,8 @@ function FlashCard({ img, name, AboutMe, Interests, id, data,baapuser }) {
           <button
             id="sendwave"
             onClick={(e) => {
-              e.preventDefault();             
-              sendWave(baapuser.id,id);
+              e.preventDefault();
+              sendWave(baapuser.id, id);
             }}
           >
             Send Wave
@@ -297,7 +287,6 @@ function FlashCard({ img, name, AboutMe, Interests, id, data,baapuser }) {
     </div>
   );
 }
-
 
 function base64toBlob(base64Data, contentType = "") {
   const sliceSize = 512;
@@ -318,6 +307,5 @@ function base64toBlob(base64Data, contentType = "") {
 
   return new Blob(byteArrays, { type: contentType });
 }
-
 
 export default Wave;
