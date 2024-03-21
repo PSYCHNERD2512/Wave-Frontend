@@ -1,2 +1,2 @@
-export { ProfileInfo } from "./ProfileInfo"
-export { ProfileTextContent } from "./ProfileTextContent"
+export { ProfileInfo } from "./ProfileInfo";
+export { ProfileTextContent } from "./ProfileTextContent";

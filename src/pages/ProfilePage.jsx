@@ -6,30 +6,31 @@ import {
   LocationIcon,
   UserIcon,
 } from "../components/icons";
-import Container from "../components/Container"
+import Container from "../components/Container";
 import styles from "./ProfilePage.module.css";
 import { useState, useEffect } from "react";
-import axios from 'axios'
+import axios from "axios";
 
 export const ProfilePage = () => {
-  let { username } = useParams()
-  const [detail, upd] = useState({})
+  let { username } = useParams();
+  const [detail, upd] = useState({});
   useEffect(() => {
     async function getdata() {
       try {
-        const data = await axios.get(`http://127.0.0.1:8000/profiles/${username}`)
-        console.log(data.data)
-        upd(data.data)
-      }
-      catch (err) {
-        console.log(err)
+        const data = await axios.get(
+          `http://127.0.0.1:8000/profiles/${username}`,
+        );
+        console.log(data.data);
+        upd(data.data);
+      } catch (err) {
+        console.log(err);
       }
     }
-    getdata()
-  }, [])
+    getdata();
+  }, []);
 
   if (!detail) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -65,14 +66,8 @@ export const ProfilePage = () => {
             </aside>
 
             <div>
-              <ProfileTextContent
-                heading="About Me"
-                content={detail.about}
-              />
-              <ProfileTextContent
-                heading="I'm lookin for..."
-                content=""
-              />
+              <ProfileTextContent heading="About Me" content={detail.about} />
+              <ProfileTextContent heading="I'm lookin for..." content="" />
             </div>
           </div>
         </main>
