@@ -1,9 +1,9 @@
 import { useAuth } from "./provider/authProvider";
-import { useNavigate, Link } from "react-router-dom";
-import { Login_page } from "./pages/Login_page";
+import { useNavigate } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
 
 const Login = () => {
-  const { setToken } = useAuth();
+  const { saveCreds } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (username, password) => {
@@ -22,8 +22,7 @@ const Login = () => {
       const data = await response.json();
       const token = data.refresh;
 
-      // console.log(token)
-      setToken(token);
+      saveCreds(token, username);
 
       navigate(`/Home/${username}`, { replace: true });
     } catch (err) {
@@ -31,10 +30,6 @@ const Login = () => {
     }
   };
 
-  // setTimeout(() => {
-  //   handleLogin();
-  // }, 30 * 1000);
-
-  return <Login_page onLogin={handleLogin} />;
+  return <LoginPage onLogin={handleLogin} />;
 };
 export default Login;

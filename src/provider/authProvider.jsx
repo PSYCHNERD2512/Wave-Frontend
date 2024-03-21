@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const AuthContext = createContext();
 
-export async function getAccessToken(token) {
+async function getAccessToken(token) {
   const res = await axios.post("http://127.0.0.1:8000/login/refresh/", {
     refresh: token,
   });
@@ -14,10 +14,11 @@ export async function getAccessToken(token) {
 
 const AuthProvider = ({ children }) => {
   // Component content goes here
-  const [token, setToken_] = useState(localStorage.getItem("refresh_token"));
-  const setToken = (newToken) => {
-    setToken_(newToken);
+  const [token, setToken] = useState(localStorage.getItem("refresh_token"));
+  const saveCreds = (newToken, username) => {
+    setToken(newToken);
     localStorage.setItem("refresh_token", newToken);
+    localStorage.setItem("username", username);
   };
 
   useEffect(() => {
@@ -33,9 +34,9 @@ const AuthProvider = ({ children }) => {
   const contextValue = useMemo(
     () => ({
       token,
-      setToken,
+      saveCreds,
     }),
-    [token],
+    [token]
   );
 
   return (

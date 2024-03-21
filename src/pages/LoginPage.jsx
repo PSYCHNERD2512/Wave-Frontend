@@ -1,12 +1,13 @@
-import "../login.css";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import beach from "../assets/beach.png";
-import logos from "../assets/logo_wave.png";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-export const Login_page = ({ onLogin }) => {
+import Logo from "../assets/logo.png";
+import "./LoginPage.css";
+
+export default function Login_page({ onLogin }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Validate username and password if needed
@@ -18,10 +19,15 @@ export const Login_page = ({ onLogin }) => {
     onLogin(username, password);
   };
 
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    if (username) navigate(`/Home/${username}`, { replace: true });
+  }, [navigate]);
+
   return (
     <div id="whole">
       <div id="symbol">
-        <img id="logo" src={logos} />
+        <img id="logo" src={Logo} />
         <div id="WAVE">Wave</div>
       </div>
       <div id="beach">
@@ -56,7 +62,7 @@ export const Login_page = ({ onLogin }) => {
             <br />
 
             <button type="submit" id="signUp">
-              Signup
+              Sign In
             </button>
           </form>
 
@@ -66,14 +72,13 @@ export const Login_page = ({ onLogin }) => {
             <div className="line"></div>
           </div>
           <div id="signin">
-            Have an account?{" "}
-            <a id="s" href="">
-              {" "}
-              Sign in
+            Don&apos;t Have an account?
+            <a id="s" href="#">
+              Sign up
             </a>
           </div>
         </div>
       </div>
     </div>
   );
-};
+}

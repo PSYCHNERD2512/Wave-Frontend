@@ -1,33 +1,31 @@
 import { useParams } from "react-router-dom";
-import { ProfileInfo, ProfileTextContent } from "../components";
+import { Container, ProfileInfo, ProfileTextContent } from "../components";
 import {
   CakeIcon,
   EmailIcon,
   LocationIcon,
   UserIcon,
 } from "../components/icons";
-import Container from "../components/Container";
 import styles from "./ProfilePage.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export const ProfilePage = () => {
+export default function ProfilePage() {
   let { username } = useParams();
   const [detail, upd] = useState({});
   useEffect(() => {
     async function getdata() {
       try {
         const data = await axios.get(
-          `http://127.0.0.1:8000/profiles/${username}`,
+          `http://127.0.0.1:8000/profiles/${username}`
         );
-        console.log(data.data);
         upd(data.data);
       } catch (err) {
         console.log(err);
       }
     }
     getdata();
-  }, []);
+  }, [username]);
 
   if (!detail) {
     return <div>Loading...</div>;
@@ -74,4 +72,4 @@ export const ProfilePage = () => {
       </div>
     </Container>
   );
-};
+}

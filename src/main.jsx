@@ -5,11 +5,12 @@ import AuthProvider from "./provider/authProvider";
 import Routes from "./routes";
 
 import "./axios_interceptor";
+import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
       <Routes />
     </AuthProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

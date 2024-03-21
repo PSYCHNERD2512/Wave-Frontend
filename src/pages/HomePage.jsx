@@ -1,26 +1,13 @@
-import "./Wave.css";
-import avtar from "./assets/Avatar.png";
-import kartik from "./assets/kartik.png";
-import search from "./assets/Search.png";
-import waving_hand from "./assets/Waving_hand.png";
+import kartik from "../assets/kartik.png";
+import searchIcon from "../assets/search.png";
 import axios from "axios";
 import { useMemo, useState } from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import Container from "./components/Container";
+import { Container, FlashCard, Avatar } from "../components";
+import "./HomePage.css";
 
-async function sendWave(send, receiver_id) {
-  const sendresponse = await axios.post(
-    `http://127.0.0.1:8000/waving/send_wave/${send}/${receiver_id}/`,
-  );
-  console.log(sendresponse.status);
-}
-function finduser(ids, allProfiles) {
-  return;
-}
-
-function Wave() {
+export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [allProfiles, setAllProfiles] = useState([]);
@@ -28,13 +15,13 @@ function Wave() {
   const sentRequests = useMemo(() => {
     if (!datauser || !datauser.sent_requests) return [];
     return allProfiles.filter((profile) =>
-      datauser.sent_requests.includes(profile.id),
+      datauser.sent_requests.includes(profile.id)
     );
   }, [datauser, allProfiles]);
   const receivedRequests = useMemo(() => {
     if (!datauser || !datauser.received_requests) return [];
     return allProfiles.filter((profile) =>
-      datauser.received_requests.includes(profile.id),
+      datauser.received_requests.includes(profile.id)
     );
   }, [datauser, allProfiles]);
   let { username } = useParams();
@@ -43,7 +30,7 @@ function Wave() {
     async function getdata() {
       try {
         const data = await axios.get(
-          `http://127.0.0.1:8000/profiles/${username}`,
+          `http://127.0.0.1:8000/profiles/${username}`
         );
         const all_data = await axios.get(`http://127.0.0.1:8000/profiles/`);
         setAllProfiles(all_data.data.profiles);
@@ -54,7 +41,7 @@ function Wave() {
     }
 
     getdata();
-  }, []);
+  }, [username]);
 
   const list = [
     { name: "Gender", list: ["Female", "Male"] },
@@ -106,12 +93,11 @@ function Wave() {
           <span id="Filters">Filters</span>
           <form
             onSubmit={(e) => {
-              console.log("resubmitting");
               e.preventDefault();
 
               axios
                 .get(
-                  `http://127.0.0.1:8000/profiles/search?filters=${searchTerm}`,
+                  `http://127.0.0.1:8000/profiles/search?filters=${searchTerm}`
                 )
                 .then((res) => {
                   setSearchResults(res.data.filtered_users);
@@ -128,7 +114,7 @@ function Wave() {
             />
             <div id="search">
               <button type="submit">
-                <img src={search} alt="" />
+                <img src={searchIcon} alt="" />
               </button>
             </div>
           </form>
@@ -184,7 +170,7 @@ function Wave() {
         <div className="peoples">
           {sentRequests.length === 0 && "No waves sent yet!"}
           {sentRequests.map((person, index) => (
-            <Avtars
+            <Avatar
               key={index}
               name={person.name}
               connectionsNum={person.connections.length}
@@ -198,7 +184,7 @@ function Wave() {
         <div className="peoples">
           {receivedRequests.length === 0 && "No waves received yet!"}
           {receivedRequests.map((person, index) => (
-            <Avtars
+            <Avatar
               key={index}
               name={person.name}
               connectionsNum={person.connections.length}
@@ -210,102 +196,3 @@ function Wave() {
     </Container>
   );
 }
-
-function Purposee({ purpose }) {
-  if (purpose === "just") return;
-  else if (purpose === "sent") {
-    return <div className="pinkbutton">sent</div>;
-  } else {
-    return <div className="pinkbutton">Requested</div>;
-  }
-}
-
-function Avtars({ name, connectionsNum, purpose }) {
-  return (
-    <div className="profile">
-      <img src={avtar} alt="" />
-      <div id="details">
-        <div className="name">{name}</div>
-        <div id="connections">{connectionsNum}M connections</div>
-      </div>
-      <Purposee purpose={purpose} />
-    </div>
-  );
-}
-
-function FlashCard({ img, name, AboutMe, Interests, id, data, baapuser }) {
-  const [imageSrc, setImageSrc] = useState(""); // State to store decrypted image URL
-
-  useEffect(() => {
-    // Decrypt and set image source when the component mounts
-    if (data.image) {
-      const blob = base64toBlob(data.image, "image/png"); // Assuming the image is PNG
-      const imageUrl = URL.createObjectURL(blob);
-      setImageSrc(imageUrl);
-    }
-  }, [data.image]);
-
-  return (
-    <div id="card">
-      <Link
-        id="link"
-        to={{
-          pathname: `/profiles/${data.username}`,
-          state: { data },
-        }}
-      >
-        <img src={img} alt="profile" id="profilephoto" />
-        <br />
-
-        <div id="info">
-          <div id="flashcardname">
-            <strong>{name}</strong>
-          </div>
-          <strong>About Me</strong>
-          <div id="AboutMe">{AboutMe}</div>
-          <br />
-          <strong>Interests </strong>
-          <br />
-          {Interests.map((interest, index3) => (
-            <div id="interest" key={index3}>
-              {interest}
-            </div>
-          ))}
-
-          <button
-            id="sendwave"
-            onClick={(e) => {
-              e.preventDefault();
-              sendWave(baapuser.id, id);
-            }}
-          >
-            Send Wave
-          </button>
-          <img id="wave" src={waving_hand} alt="" />
-        </div>
-      </Link>
-    </div>
-  );
-}
-
-function base64toBlob(base64Data, contentType = "") {
-  const sliceSize = 512;
-  const byteCharacters = atob(base64Data);
-  const byteArrays = [];
-
-  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-    const byteNumbers = new Array(slice.length);
-    for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-
-    const byteArray = new Uint8Array(byteNumbers);
-    byteArrays.push(byteArray);
-  }
-
-  return new Blob(byteArrays, { type: contentType });
-}
-
-export default Wave;

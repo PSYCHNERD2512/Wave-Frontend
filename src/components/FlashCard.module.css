@@ -1,0 +1,69 @@
+.container {
+  color: var(--clr-fg);
+  height: 55vh;
+  display: inline-block;
+  position: relative;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  margin-bottom: 4rem;
+}
+
+.profilePicture {
+  height: 60%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.content {
+  position: relative;
+  margin-top: -2rem;
+  border-radius: 2rem;
+  background-color: var(--clr-bg);
+  padding: 1rem;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section {
+  margin-top: 0.5rem;
+}
+.section span {
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+.section p {
+  margin-top: 0.25rem;
+  font-size: small;
+}
+
+.interests {
+  margin-top: 0.25rem;
+}
+.interests div {
+  margin: 0.2rem 0.3rem;
+  background-color: rgb(234, 229, 229);
+  width: auto;
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  font-size: small;
+  border-radius: 0.25rem;
+}
+
+.waveBtn {
+  background-color: var(--clr-primary);
+  color: var(--clr-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  margin-top: 1rem;
+}
+.waveBtn img {
+  margin-left: 0.25rem;
+}

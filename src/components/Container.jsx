@@ -1,10 +1,10 @@
-import logos from "../assets/logo_wave.png";
-import home from "../assets/home.png";
+import Logo from "../assets/logo.png";
+import homeIcon from "../assets/home.png";
 import profile from "../assets/profile.png";
 import setting from "../assets/setting.png";
 import { Link } from "react-router-dom";
 
-export default function Container({ children, user }) {
+export function Container({ children, user }) {
   return (
     <div id="WEBPAGE">
       <Header />
@@ -12,7 +12,7 @@ export default function Container({ children, user }) {
         <div id="sideBar">
           <div id="sideupper">
             <div id="home">
-              <Navigation_icons logo={home} name="  Home" />
+              <Navigation_icons logo={homeIcon} name="  Home" />
             </div>
             <Link id="link" to={{ pathname: `/profiles/${user.username}` }}>
               <Navigation_icons logo={profile} name="  Profile" />
@@ -43,7 +43,7 @@ function Header() {
   return (
     <div className="Header">
       <div id="head">
-        <img id="logo" src={logos} />
+        <img id="logo" src={Logo} />
         <div id="WAVE">Wave</div>
       </div>
     </div>

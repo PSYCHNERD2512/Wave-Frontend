@@ -1,8 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "../provider/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
+
 import Login from "../login";
-import Wave from "../Wave";
+import HomePage from "../pages/HomePage";
 import ProfilePage from "../pages/ProfilePage";
 
 const Routes = () => {
@@ -19,7 +20,7 @@ const Routes = () => {
         },
         {
           path: "/Home/:username",
-          element: <Wave />,
+          element: <HomePage />,
         },
       ],
     },
