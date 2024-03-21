@@ -19,7 +19,7 @@ const Routes = () => {
           element: <Login />,
         },
         {
-          path: "/Home/:username",
+          path: "/home/:username",
           element: <HomePage />,
         },
       ],

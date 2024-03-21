@@ -5,8 +5,8 @@ export function Avatar({ name, connectionsNum, purpose }) {
     <div className="profile">
       <img src={avtar} alt="" />
       <div id="details">
-        <div className="name">{name}</div>
-        <div id="connections">{connectionsNum}M connections</div>
+        <p className="name">{name}</p>
+        <p id="connections">{connectionsNum}M connections</p>
       </div>
       {purpose === "just" ? (
         <></>

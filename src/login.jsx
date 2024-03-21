@@ -24,7 +24,7 @@ const Login = () => {
 
       saveCreds(token, username);
 
-      navigate(`/Home/${username}`, { replace: true });
+      navigate(`/home/${username}`, { replace: true });
     } catch (err) {
       alert(err);
     }

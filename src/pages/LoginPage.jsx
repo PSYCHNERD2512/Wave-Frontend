@@ -21,7 +21,7 @@ export default function Login_page({ onLogin }) {
 
   useEffect(() => {
     const username = localStorage.getItem("username");
-    if (username) navigate(`/Home/${username}`, { replace: true });
+    if (username) navigate(`/home/${username}`, { replace: true });
   }, [navigate]);
 
   return (

@@ -11,10 +11,10 @@ export function Container({ children, user }) {
       <div id="content">
         <div id="sideBar">
           <div id="sideupper">
-            <div id="home">
+            <Link id="home" to={`/home/${user.username}`}>
               <Navigation_icons logo={homeIcon} name="  Home" />
-            </div>
-            <Link id="link" to={{ pathname: `/profiles/${user.username}` }}>
+            </Link>
+            <Link to={`/profiles/${user.username}`}>
               <Navigation_icons logo={profile} name="  Profile" />
             </Link>
             <Navigation_icons logo={setting} name="  Settings" />
@@ -54,7 +54,7 @@ function Navigation_icons({ logo, name }) {
   return (
     <div className="nav">
       <img src={logo} alt="" />
-      <div className="name">{name}</div>
+      <p>{name}</p>
     </div>
   );
 }

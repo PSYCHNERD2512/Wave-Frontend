@@ -1,6 +1,6 @@
 import wavingHandIcon from "../assets/wavingHand.png";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./FlashCard.module.css";
 
 async function sendWave(send, receiver_id) {
@@ -18,42 +18,43 @@ export function FlashCard({
   data,
   baapuser,
 }) {
-  return (
-    <Link to={`/profiles/${data.username}`}>
-      <div className={styles.container}>
-        <img
-          src={`data:image/png;base64,${img}`}
-          alt="profile picture"
-          className={styles.profilePicture}
-        />
+  const navigate = useNavigate();
 
-        <div className={styles.content}>
-          <span className={styles.name}>{name}</span>
-          <section className={styles.section}>
-            <span>About Me</span>
-            <p>{AboutMe}</p>
-          </section>
-          <section className={styles.section}>
-            <span>Interests</span>
-            <br />
-            <div className={styles.interests}>
-              {Interests.map((interest, index) => (
-                <div key={index}>{interest}</div>
-              ))}
-            </div>
-          </section>
-          <button
-            className={styles.waveBtn}
-            onClick={(e) => {
-              e.preventDefault();
-              sendWave(baapuser.id, id);
-            }}
-          >
-            Send Wave
-            <img src={wavingHandIcon} alt="wave" />
-          </button>
-        </div>
+  return (
+    <div className={styles.container}>
+      <img
+        src={`data:image/png;base64,${img}`}
+        alt="profile picture"
+        className={styles.profilePicture}
+        onClick={() => navigate(`/profiles/${data.username}`)}
+      />
+
+      <div className={styles.content}>
+        <span className={styles.name}>{name}</span>
+        <section className={styles.section}>
+          <span>About Me</span>
+          <p>{AboutMe}</p>
+        </section>
+        <section className={styles.section}>
+          <span>Interests</span>
+          <br />
+          <div className={styles.interests}>
+            {Interests.map((interest, index) => (
+              <div key={index}>{interest}</div>
+            ))}
+          </div>
+        </section>
+        <button
+          className={styles.waveBtn}
+          onClick={(e) => {
+            e.preventDefault();
+            sendWave(baapuser.id, id);
+          }}
+        >
+          Send Wave
+          <img src={wavingHandIcon} alt="wave" />
+        </button>
       </div>
-    </Link>
+    </div>
   );
 }
