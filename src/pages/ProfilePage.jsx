@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container, ProfileInfo, ProfileTextContent } from "../components";
 import {
   CakeIcon,
@@ -12,6 +12,7 @@ import axios from "axios";
 
 export default function ProfilePage() {
   let { username } = useParams();
+  const navigate = useNavigate();
   const [detail, upd] = useState({});
   useEffect(() => {
     async function getdata() {
@@ -50,7 +51,11 @@ export default function ProfilePage() {
               <span>{detail.name}</span>
             </div>
 
-            <button>Edit Profile</button>
+            <button
+              onClick={() => navigate("/profiles/edit", { state: detail })}
+            >
+              Edit Profile
+            </button>
           </div>
         </div>
 
