@@ -30,9 +30,10 @@ export default function ProfilePage() {
   if (!detail) {
     return <div>Loading...</div>;
   }
+  
 
   return (
-    <Container user={detail}>
+    <Container user={detail} listofconnections={[]}>
       <div>
         <div className={styles.banner}>
           <img
@@ -42,7 +43,7 @@ export default function ProfilePage() {
           <div className={styles.bannerInfo}>
             <div>
               <img
-                src={detail.picture}
+                src={`data:image/png;base64,${detail.picture}`}
                 alt="profile picture"
                 className={styles.profilePicture}
               />

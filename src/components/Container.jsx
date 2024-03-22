@@ -3,8 +3,11 @@ import homeIcon from "../assets/home.png";
 import profile from "../assets/profile.png";
 import setting from "../assets/setting.png";
 import { Link } from "react-router-dom";
+import { Avatar } from "./Avatar";
+export function Container({ children, user, listofconnections }) {
+  
+  
 
-export function Container({ children, user }) {
   return (
     <div id="WEBPAGE">
       <Header />
@@ -30,7 +33,13 @@ export function Container({ children, user }) {
           <div id="sidelower">
             {user.connections && user.connections.length === 0
               ? "No connections"
-              : "TODO :)"}
+              :<>{listofconnections.map((connected,index)=>
+              <Avatar 
+              name={connected.name}
+              key={index} 
+              connectionsNum={connected.connections && connected.connections.length} 
+              purpose="just"/>)} </>
+              }
           </div>
         </div>
         <div id="right">{children}</div>

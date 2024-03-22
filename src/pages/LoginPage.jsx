@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import beach from "../assets/beach.png";
 import Logo from "../assets/logo.png";
 import "./LoginPage.css";
-
+import { Link } from "react-router-dom";
 export default function Login_page({ onLogin }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -73,9 +73,9 @@ export default function Login_page({ onLogin }) {
           </div>
           <div id="signin">
             Don&apos;t Have an account?
-            <a id="s" href="#">
+            <Link id="s" to={{pathname:`/signup`}}>
               Sign up
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -11,18 +11,28 @@ export default function HomePage() {
   const [searchResults, setSearchResults] = useState([]);
   const [allProfiles, setAllProfiles] = useState([]);
   const [datauser, upddata] = useState({});
+  
   const sentRequests = useMemo(() => {
     if (!datauser || !datauser.sent_requests) return [];
     return allProfiles.filter((profile) =>
       datauser.sent_requests.includes(profile.id)
     );
   }, [datauser, allProfiles]);
+
+   const connectionslist = useMemo(() => {
+    if (!datauser || !datauser.connections) return [];
+    return allProfiles.filter((profile) =>
+      datauser.connections.includes(profile.id)
+    );
+  }, [datauser, allProfiles]);
+  
   const receivedRequests = useMemo(() => {
     if (!datauser || !datauser.received_requests) return [];
     return allProfiles.filter((profile) =>
       datauser.received_requests.includes(profile.id)
     );
   }, [datauser, allProfiles]);
+  
   let { username } = useParams();
 
   useEffect(() => {
@@ -34,6 +44,7 @@ export default function HomePage() {
         const all_data = await axios.get(`http://127.0.0.1:8000/profiles/`);
         setAllProfiles(all_data.data.profiles);
         upddata(data.data);
+        console.log(datauser)
       } catch (err) {
         console.log(err);
       }
@@ -86,7 +97,7 @@ export default function HomePage() {
     return <div>Loading...</div>;
   }
   return (
-    <Container user={datauser}>
+    <Container user={datauser} listofconnections={connectionslist}>
       <div id="home-content">
         <div id="FILTERDIV">
           <div id="filterupper">
