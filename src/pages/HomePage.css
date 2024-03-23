@@ -215,19 +215,26 @@
   border-radius: 10px;
   margin-bottom: 10px;
   position: sticky;
+  height: 400px;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 #sent {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 10px;
+ 
+  height: 400px;
+  overflow-y: hidden;
+  overflow-x: hidden;
   grid-area: sent;
   top: 0vh;
 }
-.peoples {
+#sent:hover{
   overflow-y: auto;
-  overflow-x: hidden;
-  /* height: 37vh; */
 }
-.peoples:hover {
-  cursor: pointer;
-}
+
 .span {
   font-weight: 550;
   font-size: large;
@@ -235,8 +242,19 @@
   top: 0;
 }
 #receive {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 10px;
+
+  height: 400px;
+  overflow-y: hidden;
+  overflow-x: hidden;
   grid-area: receive;
   top: 45vh;
+}
+#receive:hover{
+  overflow-y: auto;
 }
 
 #main {

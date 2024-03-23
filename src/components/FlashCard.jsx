@@ -49,6 +49,7 @@ export function FlashCard({
           onClick={(e) => {
             e.preventDefault();
             sendWave(baapuser.id, id);
+            window.location.href = `/home/${baapuser.username}`;            
           }}
         >
           Send Wave

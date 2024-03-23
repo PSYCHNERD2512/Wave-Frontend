@@ -4,10 +4,39 @@ import profile from "../assets/profile.png";
 import setting from "../assets/setting.png";
 import { Link } from "react-router-dom";
 import { Avatar } from "./Avatar";
-export function Container({ children, user, listofconnections }) {
-  
-  
+import { useEffect ,useState,useMemo} from "react";
+import axios from "axios";
 
+
+
+
+export function Container({ children, user,other="other"}) {
+  const [allProfiles, setAllProfiles] = useState([]);
+  
+  useEffect(() => {
+    async function getdata() {
+      try {
+        
+        const all_data = await axios.get(`http://127.0.0.1:8000/profiles/`);
+        setAllProfiles(all_data.data.profiles);
+        
+      } catch (err) {
+        console.log(err);
+      }
+      getdata();
+    }
+
+    getdata();
+  }, []);
+
+  const listofconnections = useMemo(() => {
+    if (!user || !user.connections) return [];
+    return allProfiles.filter((profile) =>
+     user.connections.includes(profile.id)
+    );
+  }, [user]);
+  
+  
   return (
     <div id="WEBPAGE">
       <Header />
@@ -24,7 +53,7 @@ export function Container({ children, user, listofconnections }) {
           </div>
           <hr />
           <div className="connections">
-            My Connections
+          {other==="self" ? "My connections": `Their connections`}
             <div id="myconnec">
               {user.connections && user.connections.length}
             </div>
@@ -36,6 +65,7 @@ export function Container({ children, user, listofconnections }) {
               :<>{listofconnections.map((connected,index)=>
               <Avatar 
               name={connected.name}
+              img={`data:image/png;base64,${connected.picture}`}
               key={index} 
               connectionsNum={connected.connections && connected.connections.length} 
               purpose="just"/>)} </>

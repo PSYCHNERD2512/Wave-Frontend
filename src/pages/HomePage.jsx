@@ -97,7 +97,7 @@ export default function HomePage() {
     return <div>Loading...</div>;
   }
   return (
-    <Container user={datauser} listofconnections={connectionslist}>
+    <Container user={datauser} other="self" >
       <div id="home-content">
         <div id="FILTERDIV">
           <div id="filterupper">
@@ -186,6 +186,7 @@ export default function HomePage() {
             {sentRequests.map((person, index) => (
               <Avatar
                 key={index}
+                img={`data:image/png;base64,${person.picture}`}
                 name={person.name}
                 connectionsNum={person.connections.length}
                 purpose="sent"
@@ -200,6 +201,7 @@ export default function HomePage() {
             {receivedRequests.map((person, index) => (
               <Avatar
                 key={index}
+                img={`data:image/png;base64,${person.picture}`}
                 name={person.name}
                 connectionsNum={person.connections.length}
                 purpose="Requested"

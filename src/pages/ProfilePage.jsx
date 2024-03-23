@@ -10,6 +10,8 @@ import styles from "./ProfilePage.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+
+
 export default function ProfilePage() {
   let { username } = useParams();
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ export default function ProfilePage() {
   
 
   return (
-    <Container user={detail} listofconnections={[]}>
+    <Container user={detail} >
       <div>
         <div className={styles.banner}>
           <img
